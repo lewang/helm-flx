@@ -1,5 +1,3 @@
-* Purpose
 
-Replace helm's default fuzzy matching with the flx algorithm.
+* Nothing to see here.  This is a toy, not ready for general consumption.
 
-* Cache management
