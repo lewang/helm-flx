@@ -167,11 +167,12 @@ match score still may be prefixed."
   "Toggle flx algorithm for helm fuzzy matching."
   :group 'helm
   (if helm-flx-mode
-      (setq helm-flx--saved (cons helm-fuzzy-sort-fn helm-fuzzy-matching-highlight-fn)
-            helm-fuzzy-sort-fn 'helm-flx-sort
-            helm-fuzzy-matching-highlight-fn nil)
-    (setq helm-fuzzy-sort-fn (car helm-flx--saved)
-          helm-fuzzy-matching-highlight-fn (cdr helm-flx--saved))))
+      (progn
+        (setq helm-flx--saved (cons (symbol-function 'helm-fuzzy-matching-default-sort-fn) (symbol-function 'helm-fuzzy-default-highlight-match)))
+        (fset 'helm-fuzzy-matching-default-sort-fn (symbol-function 'helm-flx-sort))
+        (fset 'helm-fuzzy-default-highlight-match (lambda (_candidate) _candidate)))
+    (fset 'helm-fuzzy-matching-default-sort-fn (car helm-flx--saved))
+    (fset 'helm-fuzzy-default-highlight-match (cdr helm-flx--saved))))
 
 
 
